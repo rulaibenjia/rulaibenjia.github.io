@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>如來本家 - 佛法文化 · 靈性收藏</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --c1:#ffffff; --c2:#fffaf5; --c3:#fff4eb; --c4:#fff0e2; --c5:#ffeae0; --c6:#ffe5d9;
+            --brown:#7b5a2c;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0; font-family: "Noto Sans TC", Arial, sans-serif; line-height: 1.7; color: #333;
+            background: linear-gradient(to bottom, #fefaf5, #f4eee5), url('images/paper_texture_light.png');
+        }
+
+        /* 動畫 */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: .8s ease; }
+        .fade-in.show { opacity: 1; transform: none; }
+
+        /* 頁首與導航 */
+        header {
+            height: 450px; display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; text-align: center; color: #fff;
+            background: url('images/cover.jpg') center/cover no-repeat; position: relative;
+        }
+        header::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.35); }
+        header h1, header p { position: relative; z-index: 1; }
+        header h1 { font-size: 54px; letter-spacing: 4px; margin: 0; }
+
+        nav { position: sticky; top: 0; background: #3b3b3b; z-index: 100; }
+        nav ul { margin: 0; padding: 0; list-style: none; display: flex; justify-content: center; flex-wrap: wrap; }
+        nav a { color: #fff; text-decoration: none; padding: 14px 22px; display: block; }
+        nav a:hover { background: #555; }
+
+        /* 區塊樣式 */
+        .section { max-width: 1100px; margin: auto; padding: 80px 20px; }
+        .section h2 { text-align: center; font-size: 32px; margin-bottom: 40px; }
+        .bg1{background:linear-gradient(to bottom,var(--c1),var(--c2));}
+        .bg2{background:linear-gradient(to bottom,var(--c2),var(--c3));}
+        .bg3{background:linear-gradient(to bottom,var(--c3),var(--c4));}
+        .bg4{background:linear-gradient(to bottom,var(--c4),var(--c5));}
+        .bg5{background:linear-gradient(to bottom,var(--c5),var(--c6));}
+        .bg6{background:linear-gradient(to bottom,var(--c6),var(--c6));}
+
+        /* 卷軸動畫 */
+        .scroll-section {
+            position: relative; min-height: 500px; display: flex; flex-direction: column;
+            justify-content: center; text-align: center; background: linear-gradient(to bottom, var(--c1), var(--c2));
+            overflow: hidden;
+        }
+        .scroll-section::before {
+            content: ""; position: absolute; inset: 0; background: url('images/scroll_bg.png') center/0% 100% no-repeat;
+            z-index: 1; transition: 1.2s ease-out;
+        }
+        .scroll-section.open::before { background-size: 100% 100%; }
+        .scroll-section h2, .scroll-text {
+            opacity: 0; transition: 1s ease 1s; position: relative; z-index: 2;
+            color: #fff8e7; text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+        }
+        .scroll-section.open h2, .scroll-section.open .scroll-text { opacity: 1; }
+        .scroll-text { font-size: 23px; max-width: 800px; margin: 0 auto; padding: 0 20px; }
+
+        /* 卡片 */
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
+        .card { background: #fff; padding: 25px; border-radius: 12px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,.08); transition: .3s; }
+        .card:hover { transform: translateY(-8px); }
+        .card img { width: 100%; height: 220px; object-fit: contain; background: #f9f9f9; border-radius: 8px; }
+        
+        /* 影片：380px 寬度，不變形 */
+        .video-box { max-width: 380px; margin: auto; text-align: center; }
+        .video-box video { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+
+        .flow-year { text-align: center; }
+        .flow-year img { max-width: 70%; border-radius: 12px; margin-bottom: 25px; }
+        .btn-primary { display: inline-block; padding: 14px 35px; background: var(--brown); color: #fff; border-radius: 30px; text-decoration: none; }
+
+        /* 懸浮按鈕：統一 60px 圓圈 */
+        #topBtn, .whatsapp-float {
+            position: fixed; right: 20px; width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; z-index: 1000;
+            text-decoration: none; transition: .3s; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            border: none; cursor: pointer;
+        }
+        #topBtn { bottom: 20px; background: var(--brown); color: #fff; font-size: 24px; display: none; }
+        .whatsapp-float { bottom: 95px; background: #25d366; color: #fff; font-size: 32px; }
+        .whatsapp-float:hover, #topBtn:hover { transform: scale(1.1); filter: brightness(1.1); }
+
+        footer { background: #2f2f2f; color: #ccc; text-align: center; padding: 40px 20px; }
+
+        /* 響應式優化 */
+        @media (max-width: 768px) {
+            header h1 { font-size: 36px; }
+            nav a { padding: 10px 12px; font-size: 14px; }
+            .cards { grid-template-columns: 1fr; }
+            .video-box { max-width: 100%; }
+            .scroll-text { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>如來本家</h1>
+    <p>佛法文化 · 靈性收藏 · 護持吉祥</p>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#about">關於我們</a></li>
+        <li><a href="#products">精選商品</a></li>
+        <li><a href="#services">加持分享</a></li>
+        <li><a href="#video">影片分享</a></li>
+        <li><a href="#flowyear">馬年流年</a></li>
+        <li><a href="#contact">聯絡我們</a></li>
+    </ul>
+</nav>
+
+<section id="about" class="section scroll-section bg1">
+    <h2>關於我們</h2>
+    <div class="scroll-text">
+        如來本家專注於佛教文化、藏密藝術與靈性護持物件。<br>
+        我們相信，每一件器物不僅是收藏，更是一份祝福與安心。
+    </div>
+</section>
+
+<section id="products" class="section bg2 fade-in">
+    <h2>精選商品</h2>
+    <div class="cards">
+        <div class="card"><img src="images/product1.jpg"><h3>唐卡 · 佛像</h3><p>傳統手繪唐卡、鎏金佛像</p></div>
+        <div class="card"><img src="images/product2.jpg"><h3>念珠 · 菩提</h3><p>菩提子、蜜蠟琥珀念珠</p></div>
+        <div class="card"><img src="images/product3.jpg"><h3>玉石 · 水晶</h3><p>翡翠、古玉、水晶寶石</p></div>
+        <div class="card"><img src="images/product4.jpg"><h3>風水護運</h3><p>護符、轉運物件</p></div>
+    </div>
+</section>
+
+<section id="services" class="section bg3 fade-in">
+    <h2>加持與分享</h2>
+    <div class="cards">
+        <div class="card"><img src="images/blessing.jpg"><h3>加持儀式</h3><p>部分商品進行加持與祈福</p></div>
+        <div class="card"><img src="images/teaching.jpg"><h3>文化講解</h3><p>分享佛教文化與法器用途</p></div>
+        <div class="card"><img src="images/fu_prayer.jpg"><h3>燒符祈福</h3><p>燒符祈福，祈願平安順遂</p></div>
+    </div>
+</section>
+
+<section id="video" class="section bg4 fade-in">
+    <h2>影片分享</h2>
+    <div class="video-box">
+        <video controls>
+            <source src="videos/blessing.mp4" type="video/mp4">
+        </video>
+        <p style="margin-top:15px;">加持儀式與祈福過程</p>
+    </div>
+</section>
+
+<section id="flowyear" class="section bg5 fade-in">
+    <h2>2026馬年流年資訊</h2>
+    <div class="flow-year">
+        <img src="images/horse_year.jpg"><br>
+        <a href="pdf/new year.pdf" class="btn-primary" target="_blank">點此查看 PDF 流年資訊</a>
+    </div>
+</section>
+
+<section id="contact" class="section bg6">
+    <h2>聯絡我們</h2>
+    <div style="text-align:center; margin-bottom:30px;">
+        <p style="font-size: 1.15em; color: #5d4037; letter-spacing: 1.5px; line-height: 2; margin-bottom: 35px; font-weight: 500;">
+            「不論您是資深藏家，還是初遇這份寧靜的新朋友，<br>
+            我們都歡迎您來店內品茗交流，同沾法喜，共結善緣。」
+        </p>
+
+        <p>📍 香港荃灣德士古道36-60號 荃薈商場地下 G83 & G84號舖</p>
+        <p>📘 <a href="https://www.facebook.com/RuLaiBenJia" target="_blank" style="color:var(--brown);">Facebook 如來本家</a></p>
+        <p>📞 <a href="https://wa.me/85267318948" target="_blank" style="color:var(--brown);">6731 8948</a> / <a href="https://wa.me/85251165835" target="_blank" style="color:var(--brown);">5116 5835</a></p>
+    </div>
+
+   <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3689.761895318269!2d114.1200388!3d22.3683103!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3403f9c8d46542e3%3A0xa3519e9c9ba68a2a!2z5aaC5L6G5pys5a62!5e0!3m2!1szh-TW!2shk!4v1715600000000!5m2!1szh-TW!2shk" 
+    width="100%" 
+    height="450" 
+    style="border:0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+
+<div style="text-align:center; margin-top: 25px;">
+    <a href="https://www.google.com/maps/search/?api=1&query=%E5%A6%82%E4%BE%86%E6%9C%AC%E5%AE%B6&query_place_id=ChIJ40Jl1Mj5AzQRKoolm9yeUaM" 
+       target="_blank" 
+       style="display: inline-block; padding: 12px 28px; background: #4285F4; color: white; border-radius: 30px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 10px rgba(66,133,244,0.3); transition: 0.3s;">
+       📍 在 Google 地圖中開啟 / 導航至「如來本家」
+    </a>
+    <p style="font-size: 14px; color: #888; margin-top: 10px;">點擊上方按鈕可直接使用手機 App 導航</p>
+</div>
+</section>
+
+<footer>© 2026 如來本家</footer>
+
+<a href="https://wa.me/85267318948" class="whatsapp-float" target="_blank" title="WhatsApp 聯絡我們">
+    <i class="fab fa-whatsapp"></i>
+</a>
+<button id="topBtn" title="回到頂部"><i class="fas fa-arrow-up"></i></button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => { document.querySelector('.scroll-section').classList.add('open'); }, 300);
+    });
+
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                io.unobserve(entry.target);
+            }
+        });
+    });
+    document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+    const topBtn = document.getElementById('topBtn');
+    window.onscroll = () => { topBtn.style.display = window.scrollY > 400 ? 'flex' : 'none'; };
+    topBtn.onclick = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); };
+</script>
+</body>
+</html>
