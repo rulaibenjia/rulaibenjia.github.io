@@ -129,7 +129,6 @@
 </nav>
 
 <section id="about" class="section scroll-section bg1">
-    <h2>關於我們</h2>
     <div class="scroll-text-container">
         如來本家<br>
         專注於佛教文化、<br>
@@ -142,6 +141,9 @@
 </section>
 
 <style>
+#about.scroll-section {
+    min-height: 650px !important;
+}
 .scroll-text-container {
     font-size: 26px;
     line-height: 1.8;
@@ -151,9 +153,14 @@
     color: #fff8e7;
     text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
     text-align: center;
+    position: relative;
+    z-index: 5 !important;
 }
 
 @media (max-width: 768px) {
+    #about.scroll-section {
+        min-height: 550px !important;
+    }
     .scroll-text-container {
         font-size: 19px !important;
         line-height: 1.7;
