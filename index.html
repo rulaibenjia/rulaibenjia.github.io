@@ -15,7 +15,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <style>
+   <style>
         :root {
             --c1:#ffffff; --c2:#fffaf5; --c3:#fff4eb; --c4:#fff0e2; --c5:#ffeae0; --c6:#ffe5d9;
             --brown:#7b5a2c;
@@ -26,11 +26,9 @@
             background: linear-gradient(to bottom, #fefaf5, #f4eee5), url('images/paper_texture_light.png');
         }
 
-        /* 動畫 */
         .fade-in { opacity: 0; transform: translateY(30px); transition: .8s ease; }
         .fade-in.show { opacity: 1; transform: none; }
 
-        /* 頁首與導航 */
         header {
             height: 450px; display: flex; flex-direction: column; justify-content: center; 
             align-items: center; text-align: center; color: #fff;
@@ -45,7 +43,6 @@
         nav a { color: #fff; text-decoration: none; padding: 14px 22px; display: block; }
         nav a:hover { background: #555; }
 
-        /* 區塊樣式 */
         .section { max-width: 1100px; margin: auto; padding: 80px 20px; }
         .section h2 { text-align: center; font-size: 32px; margin-bottom: 40px; }
         .bg1{background:linear-gradient(to bottom,var(--c1),var(--c2));}
@@ -55,9 +52,8 @@
         .bg5{background:linear-gradient(to bottom,var(--c5),var(--c6));}
         .bg6{background:linear-gradient(to bottom,var(--c6),var(--c6));}
 
-        /* 卷軸動畫 */
         .scroll-section {
-            position: relative; min-height: 500px; display: flex; flex-direction: column;
+            position: relative; min-height: 600px; display: flex; flex-direction: column;
             justify-content: center; text-align: center; background: linear-gradient(to bottom, var(--c1), var(--c2));
             overflow: hidden;
         }
@@ -66,20 +62,19 @@
             z-index: 1; transition: 1.2s ease-out;
         }
         .scroll-section.open::before { background-size: 100% 100%; }
-        .scroll-section h2, .scroll-text {
-            opacity: 0; transition: 1s ease 1s; position: relative; z-index: 2;
+        
+        .scroll-text {
+            opacity: 0; transition: 1s ease 1s; position: relative; z-index: 99;
             color: #fff8e7; text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+            font-size: 28px; line-height: 1.8; max-width: 310px; margin: 0 auto; padding: 0 20px;
         }
-        .scroll-section.open h2, .scroll-section.open .scroll-text { opacity: 1; }
-        .scroll-text { font-size: 23px; max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        .scroll-section.open .scroll-text { opacity: 1; }
 
-        /* 卡片 */
         .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
         .card { background: #fff; padding: 25px; border-radius: 12px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,.08); transition: .3s; }
         .card:hover { transform: translateY(-8px); }
         .card img { width: 100%; height: 220px; object-fit: contain; background: #f9f9f9; border-radius: 8px; }
         
-        /* 影片：380px 寬度，不變形 */
         .video-box { max-width: 380px; margin: auto; text-align: center; }
         .video-box video { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 
@@ -87,7 +82,6 @@
         .flow-year img { max-width: 70%; border-radius: 12px; margin-bottom: 25px; }
         .btn-primary { display: inline-block; padding: 14px 35px; background: var(--brown); color: #fff; border-radius: 30px; text-decoration: none; }
 
-        /* 懸浮按鈕：統一 60px 圓圈 */
         #topBtn, .whatsapp-float {
             position: fixed; right: 20px; width: 60px; height: 60px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center; z-index: 1000;
@@ -100,13 +94,13 @@
 
         footer { background: #2f2f2f; color: #ccc; text-align: center; padding: 40px 20px; }
 
-        /* 響應式優化 */
         @media (max-width: 768px) {
             header h1 { font-size: 36px; }
             nav a { padding: 10px 12px; font-size: 14px; }
             .cards { grid-template-columns: 1fr; }
             .video-box { max-width: 100%; }
-            .scroll-text { font-size: 18px; }
+            .scroll-section { min-height: 520px; }
+            .scroll-text { font-size: 23px !important; line-height: 1.7; max-width: 270px; }
         }
     </style>
 </head>
@@ -128,8 +122,8 @@
     </ul>
 </nav>
 
-<section id="about" class="section scroll-section bg1" style="min-height: 600px !important;">
-    <div style="font-size: 30px !important; line-height: 1.8; color: #fff8e7; text-shadow: 2px 2px 6px rgba(0,0,0,0.7); text-align: center; position: relative; z-index: 99 !important; width: 100%; max-width: 310px; margin: 0 auto;">
+<section id="about" class="section scroll-section bg1">
+    <div class="scroll-text">
         如來本家<br>
         專注於佛教文化、<br>
         藏密藝術與靈性護持物件。<br>
